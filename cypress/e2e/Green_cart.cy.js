@@ -5,16 +5,21 @@ describe('My First Test', () => {
         cy.visit('https://rahulshettyacademy.com/seleniumPractise/#/')
         cy.get("input.search-keyword").type("ca");
         cy.get(".products").find(".product").should("have.length",4)
+
+        //check element exist
         cy.contains('.product-name', 'Cauliflower - 1 Kg').should('exist');
         cy.get(':nth-child(1) > .product-action > button').should("exist")
+
         //using cypress browser css selector
         cy.get(':nth-child(1) > .product-action > button').click()
+
         //using main browser css selector
         cy.get(".products").find(".product").eq("1").contains("ADD TO CART").click()
     })
   })
 
 
+  //using loop to find the element and take a action
 
 describe("check functionality using loop",()=>{
     it("find text dynamically and add to cart",()=>{

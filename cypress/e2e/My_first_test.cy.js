@@ -61,24 +61,7 @@ describe('Text Presence Test', () => {
         });
       });
       
-    //   describe('Placeholder Input Value Test', () => {
-    //     it('Checks if the placeholder input value matches the expected value', () => {
-    //       // Visit the application URL
-    //       cy.visit('https://ucam.uiu.ac.bd/Security/LogIn.aspx');
-      
-    //       // Define the expected placeholder input value
-    //       const expectedValue = "011171060"; // Replace with the expected placeholder input value
-      
-    //       // Set the value in the input field
-        
-      
-    //       // Verify that the value matches the expected placeholder input value
-    //       cy.get('<input#logMain_UserName.form-control>').should('have.value', expectedValue);
-    //       // Replace '#logMain_UserName' with the appropriate CSS selector for your input field
-      
-    //       // Add additional assertions as needed
-    //     });
-    //   });
+
       
       
       
