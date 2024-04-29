@@ -3,14 +3,18 @@
 describe('My First Test', () => {
     it(' check search key functionality ', () => {
         cy.visit('https://rahulshettyacademy.com/seleniumPractise/#/')
+
+        //write in input box
         cy.get("input.search-keyword").type("ca");
+
+        //check the length
         cy.get(".products").find(".product").should("have.length",4)
 
         //check element exist
         cy.contains('.product-name', 'Cauliflower - 1 Kg').should('exist');
         cy.get(':nth-child(1) > .product-action > button').should("exist")
 
-        //using cypress browser css selector
+        //using cypress ide browser css selector
         cy.get(':nth-child(1) > .product-action > button').click()
 
         //using main browser css selector
