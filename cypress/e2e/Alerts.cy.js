@@ -1,7 +1,7 @@
 
 //js alert when we have some text with ok button
 
-describe('Tutorialspoint Test', function () {
+describe('js alert  Test', function () {
     // test case
     it('alert with some text with ok button', function (){
        // launch url
@@ -28,11 +28,15 @@ describe('Tutorialspoint Test', function () {
       // Verify that the alert is displayed
       cy.on('window:alert', (str) => {
         // Assert the alert message
-        expect(str).to.equal('You successfully clicked an alert');
+        expect(str).to.equal('I am a JS Alert');
       });
+
+      cy.get("#result").contains("You successfully clicked an alert")
     });
   });
   
+
+
 
 // js alert when we have some text with ok  and cancel button
   describe('confirm alert test Test', function () {
@@ -41,7 +45,8 @@ describe('Tutorialspoint Test', function () {
        //URL launched
        cy.visit("https://the-internet.herokuapp.com/javascript_alerts")
        //fire confirm browser event and accept
-       cy.get(':nth-child(2) > button').click()
+       cy.get('button').contains("Click for JS Confirm").click()
+
        cy.on("window:confirm", (t) => {
           //verify text on pop-up
           expect(t).to.equal("I am a JS Confirm");
@@ -49,26 +54,30 @@ describe('Tutorialspoint Test', function () {
        // verify application message on Cancel button click
        cy.get('#result').should('have.text', 'You clicked: Ok')
     });
+    it("js confirm alert when we click the cancel button", function () {
+      // URL launched
+      cy.visit("https://the-internet.herokuapp.com/javascript_alerts")
+      //fire confirm browser event and accept
+      cy.get('button').contains("Click for JS Confirm").click()
+
+      cy.on("window:confirm", (s) => {
+        //verify text on pop-up
+        expect(s).to.equal("I am a JS Confirm");
+         return false;
+      });
+      
+      // verify application message on Cancel button click
+      cy.get('#result').should('have.text', 'You clicked: Cancel')
+   });
  });
+
+
  
- describe('confirm alert test Test2', function () {
-    // test case
-    it("s confrim alert when we click the cancel button", function () {
-       // URL launched
-       cy.visit("https://the-internet.herokuapp.com/javascript_alerts")
-       //fire confirm browser event
-       cy.on("window:confirm", (s) => {
-         expect(s).to.equal("I am a JS Confirm");
-          return false;
-       });
-       // click on Click for JS Confirm button
-       cy.get(':nth-child(2) > button').click()
-       // verify application message on Cancel button click
-       cy.get('#result').should('have.text', 'You clicked: Cancel')
-    });
- });
 
 
+
+
+ //js alert with some text with input box which take user input and test the alert
  describe('Prompt Alert Test', () => {
    it('displays text entered in prompt in a paragraph tag', () => {
      // Visit the page
@@ -85,8 +94,9 @@ describe('Tutorialspoint Test', function () {
      // Verify that the text entered in the prompt is displayed in the paragraph tag
      cy.get('p#result').should('have.text', 'You entered: Cypress Test Text');
    });
- 
-   it.only('displays "null" in paragraph tag if prompt is canceled', () => {
+
+    
+   it('displays "null" in paragraph tag if prompt is canceled', () => {
      // Visit the page
      cy.visit('https://the-internet.herokuapp.com/javascript_alerts');
  
