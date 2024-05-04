@@ -44,6 +44,7 @@ describe('Check log in functionality', () => {
 
           //check the navbar element and length with collapse menu
       it("test the navbar-collapse",()=>{
+
         // cy.get('#ctl00_menuMain ul.level1.nav.navbar-nav.static li.static').should('have.length', 5)
 
         //this is the updated part code 
@@ -64,7 +65,7 @@ describe('Check log in functionality', () => {
   
 
 
-// url test and title check the site
+// url test and title check the site in login page
   describe('URL Test', () => {
     it('should check if the URL is correct', () => {
       const expectedURL = 'https://ucam.uiu.ac.bd/Security/LogIn.aspx'
@@ -83,7 +84,7 @@ describe('Check log in functionality', () => {
   })
   
 
-
+//check the visibility of the logo in login page
 
   describe('Logo Availability Test', () => {
     it('should check if the logo is available', () => {
@@ -95,21 +96,25 @@ describe('Check log in functionality', () => {
   })
   
 
+  //test the home page panel
 
   describe('check panel body after log in', () => {
-    it('write test for panel body elements', () => {
-      cy.visit("https://ucam.uiu.ac.bd/Security/LogIn.aspx")
+    beforeEach("login credential",()=>{
+      var expected_link="https://ucam.uiu.ac.bd/Security/LogIn.aspx"
+      cy.visit(expected_link);
+
       cy.get('#logMain_UserName').type("011171060")
       cy.get('#logMain_Password').type("2353")
       cy.get('#logMain_Button1').click()
-
-      cy.wait(3000) 
+      cy.wait(2000)
+     })
+    it('write test for panel body elements of home screen', () => {
       
       cy.get(".panel-body").should("exist")
+
       cy.get('.col-md-12.col-sm-12.col-xs-12 .text-white')
       .contains("Transcript CGPA: ")
       cy.get("#ctl00_MainContainer_Status_CGPA").contains("3.29")
-
       cy.get('.col-md-12.col-sm-12.col-xs-12 .text-white')
       .contains("Completed Credit: ")
       cy.get("#ctl00_MainContainer_Status_CompletedCr").contains("138")
@@ -122,23 +127,48 @@ describe('Check log in functionality', () => {
 
       cy.contains('.col-md-7.col-sm-7.col-xs-7 h5.text-white', 'For online payment').should('exist');
 
-      // cy.get("#ctl00_MainContainer_imgBtnOnlinePayment").click()
+      cy.get("#ctl00_MainContainer_imgBtnOnlinePayment").click()
+      cy.wait(5000)
 
-      cy.get(".panel-body").should("exist")
+      //back to home section from the another section
+      cy.window().then((win) => {
+        win.history.back();
+      });
 
+    })
+
+    it("Test important Announcement section",()=>{
+
+      cy.get('.panel-heading').contains('Important Announcement').should('exist');
+      cy.get('.col-sm-12.col-md-8 > :nth-child(1) > .col-sm-12 > :nth-child(1) > .panel-body').should("be.visible")
     })
 
   })
 
   describe('check profile element', () => {
    
-    it('check body element', () => {
-      cy.visit("https://ucam.uiu.ac.bd/Security/LogIn.aspx")
+    beforeEach("login credential",()=>{
+      var expected_link="https://ucam.uiu.ac.bd/Security/LogIn.aspx"
+      cy.visit(expected_link);
+
       cy.get('#logMain_UserName').type("011171060")
       cy.get('#logMain_Password').type("2353")
       cy.get('#logMain_Button1').click()
+      cy.wait(2000)
+     })
+
+     it('Checks for Image and Text of profile section', () => {
+ 
+      // Check if the image exists and is visible
+      cy.get('#ctl00_MainContainer_SI_Image').should('exist').and('be.visible');
   
-      cy.wait(3000) 
+      // Check if the name text exists and is visible
+      cy.get('#ctl00_MainContainer_SI_Name').should('exist').and('be.visible');
+  
+      // Check if the ID text exists and is visible
+      cy.get('#ctl00_MainContainer_Label1').should('exist').and('be.visible');
+    });
+    it('check profile body element', () => {
       cy.get(".col-sm-12.col-md-12.col-lg-12").should("exist");
       cy.get(".col-sm-12.col-md-12.col-lg-12").contains("Profile")
       cy.get(".col-sm-12.col-md-12.col-lg-12").contains("Information")
@@ -151,22 +181,29 @@ describe('Check log in functionality', () => {
       cy.get(".col-sm-12.col-md-12.col-lg-12").contains("Father's Name")
       cy.get("span#ctl00_MainContainer_SI_FatherName").contains("Md. Manik Miah")
 
-      
+    
+    })
+
+    it("test advisor information,attendance summary, result summary section",()=>{
       cy.get(".col-sm-12.col-md-12.col-lg-12").contains("Advisor Information")
       cy.get(".col-sm-12.col-md-12.col-lg-12").contains("Attendance Summary ")
       cy.get(".col-sm-12.col-md-12.col-lg-12").contains("Result Summary")
-    
     })
   })
 
 
   describe('Footer Test', () => {
-    it('should contain the correct footer text', () => {
-      cy.visit("https://ucam.uiu.ac.bd/Security/LogIn.aspx")
+    beforeEach("login credential",()=>{
+      var expected_link="https://ucam.uiu.ac.bd/Security/LogIn.aspx"
+      cy.visit(expected_link);
+
       cy.get('#logMain_UserName').type("011171060")
       cy.get('#logMain_Password').type("2353")
-      cy.get('#logMain_Button1').click()// Replace 'your_page_url_here' with the actual URL of your page
-      
+      cy.get('#logMain_Button1').click()
+      cy.wait(2000)
+     })
+
+    it('should contain the correct footer text', () => {      
       // Assert that the footer element exists
       cy.get('.footer').should('exist');
       
