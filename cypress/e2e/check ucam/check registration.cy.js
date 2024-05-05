@@ -11,9 +11,6 @@
       cy.get('#logMain_Button1').click()
       cy.wait(3000) 
       cy.get(':nth-child(5) > .level1').contains('Registration').click()
-      // cy.get("#ctl00_menuMain")
-      // .contains("Registration")
-      // .click();
 
       cy.get('[aria-haspopup="ctl00_menuMain:submenu:14"] > .dropdown-toggle').click()
 
