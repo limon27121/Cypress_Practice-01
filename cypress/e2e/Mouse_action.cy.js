@@ -1,9 +1,9 @@
-describe('My First Test', () => {
+describe('Mouse event test', () => {
 
     beforeEach("visit the site",()=>{
         cy.visit("https://www.letskodeit.com/practice")
     })
-    it('Does not do much!', () => {
+    it('test using mouseover', () => {
      
       cy.get("#mousehover").trigger("mouseover");
 

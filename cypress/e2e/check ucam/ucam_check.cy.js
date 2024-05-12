@@ -1,9 +1,17 @@
+
+describe("Login page visibility check",()=>{
+  it("login section is visible",()=>{
+    var expected_link="https://ucam.uiu.ac.bd/Security/LogIn.aspx"
+      cy.visit(expected_link);
+      cy.get(".card-body").should("be.visible")
+  })
+})
+
 describe('Check log in functionality', () => {
 
      beforeEach("login credential",()=>{
       var expected_link="https://ucam.uiu.ac.bd/Security/LogIn.aspx"
       cy.visit(expected_link);
-
       cy.get('#logMain_UserName').type("011171060")
       cy.get('#logMain_Password').type("2353")
       cy.get('#logMain_Button1').click()
@@ -33,6 +41,7 @@ describe('Check log in functionality', () => {
 
         //check the navbar element and length
         it("test the navbar header",()=>{
+          cy.get(".navbar-header").should("be.visible")
           cy.get('.navbar-header ul.staticHome').should('have.length', 3)
     
           cy.get('.navbar-header ul.staticHome li').contains("Home")
@@ -42,15 +51,12 @@ describe('Check log in functionality', () => {
          })
          
 
-          //check the navbar element and length with collapse menu
+      //check the navbar element and length with collapse menu
       it("test the navbar-collapse",()=>{
-
-        // cy.get('#ctl00_menuMain ul.level1.nav.navbar-nav.static li.static').should('have.length', 5)
 
         //this is the updated part code 
         cy.get('#ctl00_menuMain>ul>li').should('have.length', 5)
-
-
+        //check the item
         cy.get('#ctl00_menuMain>ul>li>a').contains("Student Accounts")
         cy.get('#ctl00_menuMain>ul>li>a').contains("Transport Registration")
         cy.get('#ctl00_menuMain>ul>li>a').contains("COE")
@@ -96,6 +102,8 @@ describe('Check log in functionality', () => {
   })
   
 
+
+
   //test the home page panel
 
   describe('check panel body after log in', () => {
@@ -111,7 +119,10 @@ describe('Check log in functionality', () => {
     it('write test for panel body elements of home screen', () => {
       
       cy.get(".panel-body").should("exist")
-
+      
+      // transcript and credit section check 
+       
+      cy.get(".col-md-12.col-sm-12.col-xs-12").should("be.visible")
       cy.get('.col-md-12.col-sm-12.col-xs-12 .text-white')
       .contains("Transcript CGPA: ")
       cy.get("#ctl00_MainContainer_Status_CGPA").contains("3.29")
@@ -119,14 +130,20 @@ describe('Check log in functionality', () => {
       .contains("Completed Credit: ")
       cy.get("#ctl00_MainContainer_Status_CompletedCr").contains("138")
 
+      //balance section check
+
+      cy.get(".col-md-12.col-sm-12.col-xs-12").should("be.visible")
       cy.get('.col-md-12.col-sm-12.col-xs-12 .text-white')
       .contains("Current Balance: ")
       cy.get("#ctl00_MainContainer_FI_CurrentBalance").contains("0 Tk.")
       cy.get('.col-md-12.col-sm-12.col-xs-12 .text-white')
       .contains("Negative(-) balance means advance payment")
+    
+      //online payment section check
 
+      cy.get(".col-md-12.col-sm-12.col-xs-12").should("be.visible")
       cy.contains('.col-md-7.col-sm-7.col-xs-7 h5.text-white', 'For online payment').should('exist');
-
+      cy.get("#ctl00_MainContainer_imgBtnOnlinePayment").should("be.visible")
       cy.get("#ctl00_MainContainer_imgBtnOnlinePayment").click()
       cy.wait(5000)
 
@@ -137,14 +154,33 @@ describe('Check log in functionality', () => {
 
     })
 
-    it("Test important Announcement section",()=>{
 
+    it("Test important Announcement section",()=>{
+      cy.get('.col-sm-12.col-md-8 > :nth-child(1) > .col-sm-12').should("be.visible")
       cy.get('.panel-heading').contains('Important Announcement').should('exist');
       cy.get('.col-sm-12.col-md-8 > :nth-child(1) > .col-sm-12 > :nth-child(1) > .panel-body').should("be.visible")
     })
+     
+    it("notice section check",()=>{
+      cy.get('.col-sm-12.col-md-8 > :nth-child(2) > :nth-child(1) > .panel > .panel-heading').should("be.visible")
+      cy.get('.col-sm-12.col-md-8 > :nth-child(2) > :nth-child(1) > .panel > .panel-heading').contains("Notice")
+      cy.get('.col-sm-12.col-md-8 > :nth-child(2) > :nth-child(1) > .panel > .panel-body').should("be.visible")
+    })
+    it("class routine section check",()=>{
+      cy.get(".panel-heading").should("be.visible")
+      cy.get(':nth-child(2) > .panel > .panel-heading > .badge').contains("Class Routine")
+      cy.get('.col-sm-12.col-md-8 > :nth-child(2)').should("be.visible")
+    })
 
+    it.only("test advisor information,attendance summary, result summary section",()=>{
+      cy.get(".col-sm-12.col-md-12.col-lg-12").contains("Advisor Information")
+      cy.get(".col-sm-12.col-md-12.col-lg-12").contains("Attendance Summary ")
+      cy.get(".col-sm-12.col-md-12.col-lg-12").contains("Result Summary")
+    })
   })
 
+
+  
   describe('check profile element', () => {
    
     beforeEach("login credential",()=>{
@@ -184,11 +220,7 @@ describe('Check log in functionality', () => {
     
     })
 
-    it("test advisor information,attendance summary, result summary section",()=>{
-      cy.get(".col-sm-12.col-md-12.col-lg-12").contains("Advisor Information")
-      cy.get(".col-sm-12.col-md-12.col-lg-12").contains("Attendance Summary ")
-      cy.get(".col-sm-12.col-md-12.col-lg-12").contains("Result Summary")
-    })
+    
   })
 
 
@@ -213,4 +245,6 @@ describe('Check log in functionality', () => {
         .contains('Copyright © 2013 - 2024 Edusoft Consultants Ltd. All rights reserved.');
     });
   });
+  
+
   

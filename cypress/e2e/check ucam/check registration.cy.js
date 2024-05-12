@@ -16,6 +16,8 @@
 
       cy.get(".level2.dropdown-menu.dynamic").contains("Result History").click();
     })
+
+    
      
     it("test Student course history",()=>{
       cy.get(".col-md-12 .col-lg-12").contains("Student Course History")
