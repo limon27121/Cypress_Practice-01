@@ -19,37 +19,41 @@
 
     
      
-    it("test Student course history",()=>{
-      cy.get(".col-md-12 .col-lg-12").contains("Student Course History")
+    it("test Student Course History section",()=>{
       cy.get(".col-md-12 .col-lg-12").should("be.visible")
+      cy.get(".col-md-12 .col-lg-12").contains("Student Course History")
+      // check course history section is visible
       cy.get(".panel.panel-default.pp").should("be.visible");
+
       cy.get(".panel.panel-default.pp").contains("Student ID :").should("be.visible");
       //check input field value
-      cy.get("#ctl00_MainContainer_txtStudentId").should("have.value", "011171060");
+      cy.get("#ctl00_MainContainer_txtStudentId").should("have.value", "011171060").and("exist");
+
       cy.get("#ctl00_MainContainer_btnLoad").should("exist").click()
 
 
       // Check if the student name label is available and contains the correct text
-    cy.get(".panel.panel-default.pp")
-      .contains("Student Name :")
-      .should("be.visible");
+     cy.get(".panel.panel-default.pp").contains("Student Name :").should("be.visible");
 
     // Check if the student name value is correct
-    cy.get("#ctl00_MainContainer_lblStudentName")
-      .should("contain", "Md. Moontaseralam");
+     cy.get("#ctl00_MainContainer_lblStudentName")
+      .should("contain", "Md. Moontaseralam").and("be.visible");
 
 
       // Check if the program label is available and contains the correct text
-    cy.get(".panel.panel-default.pp")
-      .contains("Program :")
-      .should("be.visible");
+     cy.get(".panel.panel-default.pp").contains("Program :").should("be.visible");
 
     // Check if the program value is correct
-    cy.get("#ctl00_MainContainer_lblStudentProgram")
+     cy.get("#ctl00_MainContainer_lblStudentProgram")
       .should("contain", "BSCSE");
+
+      //check Batch section and value is correct
+      cy.get(".panel.panel-default.pp").contains("Batch :").should("be.visible")
+      cy.get("#ctl00_MainContainer_lblStudentBatch").contains("171 - Spring 2017").should("be.visible")
+      
     })
      
-    it("test another section of student course history",()=>{
+    it("test sub-section of student course history",()=>{
 
       cy.get(".panel.panel-default.pp").contains("CGPA :").should("be.visible")
       cy.get("#ctl00_MainContainer_lblCGPA").contains("3.29")
@@ -76,11 +80,15 @@
       cy.get("#ctl00_MainContainer_lblWaivedTransferCr").contains("0")
 
     })
+    it("Message element",()=>{
+      cy.get(".msgTitle").should("contain","Message: ").and("be.visible")
+    })
 
-      it('trimester element test developed', () => {
-       cy.get(".msgTitle").contains("Message: ")
-       cy.get("#ctl00_MainContainer_lblResult").contains("Trimester wise GPA and CGPA")
-       cy.get('#ctl00_MainContainer_imgPhoto').should('exist');
+      it('trimester wise GPA and CGPA element test developed', () => {
+      cy.get(".col-md-12 .col-lg-12").should("be.visible")
+      cy.get("#ctl00_MainContainer_lblResult").contains("Trimester wise GPA and CGPA").should("be.visible")
+      cy.get('#ctl00_MainContainer_imgPhoto').should('exist')
+      .and('have.attr', 'src', '../Upload/Avatar/Student/678285.jpg');
 
       })
 
@@ -88,18 +96,30 @@
 
       cy.get('#ctl00_MainContainer_gvResult').within(() => {
         // Within the table, verify the text of each table header cell
-        cy.get('th').eq(0).should('contain', 'Trimester');
-        cy.get('th').eq(1).should('contain', 'Credit(Probation)');
-        cy.get('th').eq(2).should('contain', 'Term GPA(Probation)');
-        cy.get('th').eq(3).should('contain', 'CGPA(Probation)');
-        cy.get('th').eq(4).should('contain', 'Credit(Transcript)');
-        cy.get('th').eq(5).should('contain', 'GPA(Transcript)');
-        cy.get('th').eq(6).should('contain', 'CGPA(Transcript)');
+        cy.get('th').eq(0).should('contain', 'Trimester').and("be.visible");
+        cy.get('th').eq(1).should('contain', 'Credit(Probation)').and("be.visible");
+        cy.get('th').eq(2).should('contain', 'Term GPA(Probation)').and("be.visible");
+        cy.get('th').eq(3).should('contain', 'CGPA(Probation)').and("be.visible");
+        cy.get('th').eq(4).should('contain', 'Credit(Transcript)').and("be.visible");
+        cy.get('th').eq(5).should('contain', 'GPA(Transcript)').and("be.visible");
+        cy.get('th').eq(6).should('contain', 'CGPA(Transcript)').and("be.visible");
     });
+
+    cy.scrollTo('bottom');
+    cy.wait(1000)
+    cy.scrollTo("top")
+    cy.wait(1000)
+    cy.scrollTo("center")
+
      //check number of rows
-    cy.get('#ctl00_MainContainer_gvResult').find('tbody tr').should('have.length', 16);
+    cy.get('#ctl00_MainContainer_gvResult').find('tbody tr').should('have.length', 16).and("be.visible");
 
     })
+
+
+    // it.only('Scrolls the page in all directions and checks if scrolling works correctly', () => {
+     
+    // });
 
    // test Trimester wise GPA and CGPA section
     it('Verifies that every row contains numeric values of the trimester-wise result table ', function () {
@@ -121,7 +141,8 @@
 
 
   // test Result of completed/registered courses section
-  it('Checks the presence and text of header elements', () => {
+  it.only('Checks the presence and text of header elements', () => {
+    cy.get(".panel.panel-default.pp").should("be.visible")
 
     cy.get("#ctl00_MainContainer_lblRegistered").contains("Result of completed/registered courses")
   
@@ -158,6 +179,9 @@
   });
 
 });
+
+
+
     
   
 
